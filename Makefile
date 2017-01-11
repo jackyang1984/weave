@@ -211,3 +211,22 @@ build:
 
 run-smoketests: all testrunner
 	cd test && ./setup.sh && ./run_all.sh
+
+integration-tests: all testrunner
+	# Usage:
+	#   $ make \
+	#     PROVIDER="<provider>" \
+	#     NUM_HOSTS="<# test machines>" \
+	#     PLAYBOOK="<filename>" \
+	#     RUNNER_ARGS="<...>" \
+	#     TESTS="<...>" \
+	#     SKIP_CONFIG=1 \  # Skip the configuration phase before running tests.
+	#     SKIP_DESTROY=1 \ # Skip the destroy phase after running tests.
+	#     ONLY_DESTROY=1 \ # Destroy the test cluster (and do not do anything else, like starting the test cluster, configuring it, or running tests).
+	#     DOCKER_VERSION=<...> \
+	#     KUBERNETES_VERSION=<...> \
+	#     KUBERNETES_CNI_VERSION=<...> \
+	#     integration-tests
+	# where provider among: {vagrant|gcp|aws|do}.
+	#
+	RUNNER_ARGS="-parallel" ./test/run-integration-tests.sh
